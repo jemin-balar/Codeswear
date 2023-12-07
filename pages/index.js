@@ -14,6 +14,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1>shree ganesh</h1>
+      <div className="mx-4 bg-slate-500">thi is new code</div>
     </>
   );
 }
