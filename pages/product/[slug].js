@@ -1,8 +1,26 @@
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 const Slug = () => {
   const router = useRouter();
   const { slug } = router.query;
+
+  const [pin, setPin] = useState();
+  const [service, setService] = useState();
+
+  const checkServiceAbility = async () => {
+    let pins = await fetch("http://localhost:3000/api/pincode");
+    let pinJson = await pins.json();
+    if (pinJson.includes(parseInt(pin))) {
+      setService(true);
+    } else {
+      setService(false);
+    }
+  };
+
+  const onChangePin = (e) => {
+    setPin(e.target.value);
+  };
 
   return (
     <>
@@ -161,10 +179,13 @@ const Slug = () => {
               </div>
               <div class="flex">
                 <span class="title-font font-medium text-2xl text-gray-900">
-                  $58.00
+                  ₹ 499.00
                 </span>
-                <button class="flex ml-auto text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
-                  Button
+                <button class="flex ml-4 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
+                  Add to Cart
+                </button>
+                <button class="flex ml-3 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
+                  Buy Now
                 </button>
                 <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                   <svg
@@ -179,6 +200,31 @@ const Slug = () => {
                   </svg>
                 </button>
               </div>
+              <div className="pin mt-6 flex space-x-2 text-sm">
+                <input
+                  className="px-2 border-pink-500 rounded-md"
+                  type="text"
+                  onChange={(e) => onChangePin(e)}
+                  placeholder="Enter you pincode"
+                  value={pin}
+                />
+                <button
+                  onClick={checkServiceAbility}
+                  class="text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded"
+                >
+                  Check
+                </button>
+              </div>
+              {!service && service != null && (
+                <div className="text-red-300">
+                  Sorry, We Do not deliver to this pincode yet
+                </div>
+              )}
+              {service && service != null && (
+                <div className="text-green-300">
+                  Yay!, We deliver to this pincode yet
+                </div>
+              )}
             </div>
           </div>
         </div>

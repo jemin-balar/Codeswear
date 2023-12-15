@@ -5,7 +5,9 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { IoIosCloseCircle } from "react-icons/io";
 import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 
-const Navbar = () => {
+const Navbar = (cart, addToCart, removeFromCart, clearCart) => {
+  console.log(cart, addToCart, removeFromCart, clearCart, ">>>>>>>>>>>>>>");
+
   const [iscart, setIsCart] = useState(false);
 
   return (
@@ -61,96 +63,34 @@ const Navbar = () => {
             <IoIosCloseCircle size={30} />
           </span>
           <ol className="list-decimal font-semibold">
-            <li>
-              <div className="item flex my-5">
-                <div className="w-2/3 font-semibold overflow-auto">
-                  Tshirt - wear the code
-                </div>
-                <div className="flex font-semibold items-center justify-center w-1/3 cursor-pointer text-pink-500">
-                  <AiFillMinusCircle />
-                  <span className="mx-1 text-1xl">1</span>
-                  <AiFillPlusCircle />
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className="item flex my-5">
-                <div className="w-2/3 font-semibold overflow-auto">
-                  Tshirt - wear the code
-                </div>
-                <div className="flex font-semibold items-center justify-center w-1/3 cursor-pointer text-pink-500">
-                  <AiFillMinusCircle />
-                  <span className="mx-1 text-1xl">1</span>
-                  <AiFillPlusCircle />
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className="item flex my-5">
-                <div className="w-2/3 font-semibold overflow-auto">
-                  Tshirt - wear the code
-                </div>
-                <div className="flex font-semibold items-center justify-center w-1/3 cursor-pointer text-pink-500">
-                  <AiFillMinusCircle />
-                  <span className="mx-1 text-1xl">1</span>
-                  <AiFillPlusCircle />
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className="item flex my-5">
-                <div className="w-2/3 font-semibold overflow-auto">
-                  Tshirt - wear the code
-                </div>
-                <div className="flex font-semibold items-center justify-center w-1/3 cursor-pointer text-pink-500">
-                  <AiFillMinusCircle />
-                  <span className="mx-1 text-1xl">1</span>
-                  <AiFillPlusCircle />
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className="item flex my-5">
-                <div className="w-2/3 font-semibold overflow-auto">
-                  Tshirt - wear the code
-                </div>
-                <div className="flex font-semibold items-center justify-center w-1/3 cursor-pointer text-pink-500">
-                  <AiFillMinusCircle />
-                  <span className="mx-1 text-1xl">1</span>
-                  <AiFillPlusCircle />
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className="item flex my-5">
-                <div className="w-2/3 font-semibold overflow-auto">
-                  Tshirt - wear the code
-                </div>
-                <div className="flex font-semibold items-center justify-center w-1/3 cursor-pointer text-pink-500">
-                  <AiFillMinusCircle />
-                  <span className="mx-1 text-1xl">1</span>
-                  <AiFillPlusCircle />
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className="item flex my-5">
-                <div className="w-2/3 font-semibold overflow-auto">
-                  Tshirt - wear the code
-                </div>
-                <div className="flex font-semibold items-center justify-center w-1/3 cursor-pointer text-pink-500">
-                  <AiFillMinusCircle />
-                  <span className="mx-1 text-1xl">1</span>
-                  <AiFillPlusCircle />
-                </div>
-              </div>
-            </li>
+            {Object.keys(cart).length == 0 && (
+              <div className="text-center">No items in the cart</div>
+            )}
+            {Object.keys(cart).map((_d) => {
+              return (
+                <li key={_d}>
+                  <div className="item flex my-5">
+                    <div className="w-2/3 font-semibold overflow-auto">
+                      {cart[_d].name}
+                    </div>
+                    <div className="flex font-semibold items-center justify-center w-1/3 cursor-pointer text-pink-500">
+                      <AiFillMinusCircle />
+                      <span className="mx-1 text-1xl">{cart[_d].qty}</span>
+                      <AiFillPlusCircle />
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
           </ol>
           <div className="flex items-center justify-center">
             <button class="flex mx-auto mt-16  text-white bg-pink-500 border-0 py-1 px-3 focus:outline-none hover:bg-pink-600 rounded text-lg">
               Checkout
             </button>
-            <button class="flex mx-auto mt-16  text-white bg-pink-500 border-0 py-1 px-3 focus:outline-none hover:bg-pink-600 rounded text-lg">
+            <button
+              class="flex mx-auto mt-16  text-white bg-pink-500 border-0 py-1 px-3 focus:outline-none hover:bg-pink-600 rounded text-lg"
+              onClick={clearCart}
+            >
               Clearcart
             </button>
           </div>
